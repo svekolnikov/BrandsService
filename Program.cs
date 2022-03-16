@@ -1,9 +1,22 @@
+using BrandsService.DAL.Context;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+var services = builder.Services;
 
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+services.AddControllers();
+
+services.AddEndpointsApiExplorer();
+services.AddSwaggerGen(options =>
+{
+    var xmlFilename = "api.xml";
+    options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
+});
+
+//Database
+services.AddDbContext<ApplicationDbContext>(optionsAction => optionsAction
+    .UseSqlServer(builder.Configuration.GetConnectionString("Default")));
 
 var app = builder.Build();
 

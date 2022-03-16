@@ -1,0 +1,106 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>BrandsService</name>
+    </assembly>
+    <members>
+        <member name="M:BrandsService.Controllers.BrandsController.GetAll">
+            <summary>
+            Получить все бренды
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BrandsService.Controllers.BrandsController.Create">
+            <summary>
+            Создать бренд
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BrandsService.Controllers.BrandsController.Update(System.Int64)">
+            <summary>
+            Обновить бренд
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BrandsService.Controllers.BrandsController.Delete(System.Int64)">
+            <summary>
+            Удалить бренд
+            </summary>
+            <param name="ind"></param>
+            <returns></returns>
+        </member>
+        <member name="P:BrandsService.DAL.Context.ApplicationDbContext.Brands">
+            <summary>
+            Бренды
+            </summary>
+        </member>
+        <member name="P:BrandsService.DAL.Context.ApplicationDbContext.Sizes">
+            <summary>
+            Размеры
+            </summary>
+        </member>
+        <member name="P:BrandsService.DTO.BrandDto.Name">
+            <summary>
+            Название
+            </summary>
+        </member>
+        <member name="P:BrandsService.DTO.BrandDto.AllowedSizes">
+            <summary>
+            Список допустимых размеров одежды
+            </summary>
+        </member>
+        <member name="T:BrandsService.DTO.SizeDto">
+            <summary>
+            DTO размера
+            </summary>
+        </member>
+        <member name="T:BrandsService.Models.Brand">
+            <summary>
+            Бренд (компания)
+            </summary>
+        </member>
+        <member name="P:BrandsService.Models.Brand.Name">
+            <summary>
+            Название
+            </summary>
+        </member>
+        <member name="P:BrandsService.Models.Brand.AllowedSizes">
+            <summary>
+            Список допустимых размеров одежды
+            </summary>
+        </member>
+        <member name="T:BrandsService.Models.Size">
+            <summary>
+            Размер, устанавливает связь размера бренда и размера РФ
+            </summary>
+        </member>
+        <member name="P:BrandsService.Models.Size.RF">
+            <summary>
+            Размер РФ
+            </summary>
+        </member>
+        <member name="P:BrandsService.Models.Size.Own">
+            <summary>
+            Размер бренда
+            </summary>
+        </member>
+        <member name="T:BrandsService.Services.IBrandsService">
+            <summary>
+            Сервис работы с брендами
+            </summary>
+        </member>
+        <member name="M:BrandsService.Services.IBrandsService.GetBrands">
+            <summary>
+            Получить все бренды
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BrandsService.Services.IBrandsService.CreateBrand(BrandsService.Requests.CreateBrandRequest)">
+            <summary>
+            Создать бренд
+            </summary>
+            <param name="createBrandRequest"></param>
+        </member>
+    </members>
+</doc>

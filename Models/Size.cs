@@ -1,9 +1,21 @@
-﻿namespace BrandsService.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace BrandsService.Models;
+
+/// <summary>
+/// Размер, устанавливает связь размера бренда и размера РФ
+/// </summary>
+public class Size : Entity
 {
-    public class Size
-    {
-        public int Id { get; set; }
-        public string Rf { get; set; }
-        public string Own { get; set; }
-    }
+    /// <summary>
+    /// Размер РФ
+    /// </summary>
+    [Required]
+    public string RF { get; set; } = null!;
+
+    /// <summary>
+    /// Размер бренда
+    /// </summary>
+    [Required]
+    public string Own { get; set; } = null!;
 }

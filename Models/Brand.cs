@@ -1,9 +1,20 @@
-﻿namespace BrandsService.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace BrandsService.Models;
+
+/// <summary>
+/// Бренд (компания)
+/// </summary>
+public class Brand : Entity
 {
-    public class Brand
-    {
-        public long Id { get; set; }
-        public string Name { get; set; }
-        public IEnumerable<Size> AllowedSizes { get; set; }
-    }
+    /// <summary>
+    /// Название
+    /// </summary>
+    [Required]
+    public string Name { get; set; } = null!;
+
+    /// <summary>
+    /// Список допустимых размеров одежды
+    /// </summary>
+    public IEnumerable<Size> AllowedSizes { get; set; } = null!;
 }
