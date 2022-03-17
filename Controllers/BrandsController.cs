@@ -1,4 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
+using BrandsService.Requests;
+using BrandsService.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BrandsService.Controllers;
@@ -8,10 +10,14 @@ namespace BrandsService.Controllers;
 public class BrandsController : ControllerBase
 {
     private readonly ILogger<BrandsController> _logger;
+    private readonly IBrandsService _brandsService;
 
-    public BrandsController(ILogger<BrandsController> logger)
+    public BrandsController(
+        ILogger<BrandsController> logger, 
+        IBrandsService brandsService)
     {
         _logger = logger;
+        _brandsService = brandsService;
     }
 
     /// <summary>
@@ -19,9 +25,21 @@ public class BrandsController : ControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpGet("")]
-    public IActionResult GetAll()
+    public async Task<IActionResult> GetAllAsync()
     {
-        return Ok();
+        try
+        {
+            var serviceResult = await _brandsService.GetBrands();
+            if (serviceResult.Failures?.Count == 0)
+                return Ok(serviceResult);
+
+            return BadRequest(serviceResult);
+        }
+        catch (Exception e)
+        {
+            LogError(e);
+            return StatusCode(500);
+        }
     }
 
     /// <summary>
@@ -29,9 +47,21 @@ public class BrandsController : ControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpPost("")]
-    public IActionResult Create()
+    public async Task<IActionResult> Create(CreateBrandRequest createBrandRequest)
     {
-        return Ok();
+        try
+        {
+            var serviceResult = await _brandsService.CreateBrand(createBrandRequest);
+            if (serviceResult.Failures?.Count == 0)
+                return Ok(serviceResult);
+
+            return BadRequest(serviceResult);
+        }
+        catch (Exception e)
+        {
+            LogError(e);
+            return StatusCode(500);
+        }
     }
 
     /// <summary>

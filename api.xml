@@ -4,13 +4,13 @@
         <name>BrandsService</name>
     </assembly>
     <members>
-        <member name="M:BrandsService.Controllers.BrandsController.GetAll">
+        <member name="M:BrandsService.Controllers.BrandsController.GetAllAsync">
             <summary>
             Получить все бренды
             </summary>
             <returns></returns>
         </member>
-        <member name="M:BrandsService.Controllers.BrandsController.Create">
+        <member name="M:BrandsService.Controllers.BrandsController.Create(BrandsService.Requests.CreateBrandRequest)">
             <summary>
             Создать бренд
             </summary>
@@ -35,11 +35,6 @@
             Бренды
             </summary>
         </member>
-        <member name="P:BrandsService.DAL.Context.ApplicationDbContext.Sizes">
-            <summary>
-            Размеры
-            </summary>
-        </member>
         <member name="P:BrandsService.DTO.BrandDto.Name">
             <summary>
             Название
@@ -53,6 +48,22 @@
         <member name="T:BrandsService.DTO.SizeDto">
             <summary>
             DTO размера
+            </summary>
+        </member>
+        <member name="T:BrandsService.IServiceResult">
+            <summary>
+            Результат выполнения сервиса без данных
+            </summary>
+        </member>
+        <member name="T:BrandsService.IServiceResult`1">
+            <summary>
+            Результат выполнения сервиса с данными
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="P:BrandsService.IServiceResult`1.Data">
+            <summary>
+            Возвращаемые данные из сервиса
             </summary>
         </member>
         <member name="T:BrandsService.Models.Brand">
@@ -85,6 +96,39 @@
             Размер бренда
             </summary>
         </member>
+        <member name="P:BrandsService.Requests.CreateBrandRequest.Name">
+            <summary>
+            Название
+            </summary>
+        </member>
+        <member name="P:BrandsService.Requests.CreateBrandRequest.AllowedSizes">
+            <summary>
+            Список допустимых размеров одежды
+            </summary>
+        </member>
+        <member name="M:BrandsService.Services.BrandService.GetBrands">
+            <summary>
+            Получить все бренды
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BrandsService.Services.BrandService.CreateBrand(BrandsService.Requests.CreateBrandRequest)">
+            <summary>
+            Создать бренд
+            </summary>
+            <param name="createBrandRequest"></param>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="T:BrandsService.Services.FailureInformation">
+            <summary>
+            Информация об ошибке
+            </summary>
+        </member>
+        <member name="P:BrandsService.Services.FailureInformation.Description">
+            <summary>
+            Описание ошибки
+            </summary>
+        </member>
         <member name="T:BrandsService.Services.IBrandsService">
             <summary>
             Сервис работы с брендами
@@ -101,6 +145,16 @@
             Создать бренд
             </summary>
             <param name="createBrandRequest"></param>
+        </member>
+        <member name="T:BrandsService.Services.IFailureInformation">
+            <summary>
+            Информация об ошибке
+            </summary>
+        </member>
+        <member name="P:BrandsService.Services.IFailureInformation.Description">
+            <summary>
+            Описание ошибки
+            </summary>
         </member>
     </members>
 </doc>

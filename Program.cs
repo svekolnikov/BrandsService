@@ -1,4 +1,7 @@
+using System.Reflection;
 using BrandsService.DAL.Context;
+using BrandsService.DAL.Repositories;
+using BrandsService.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,6 +20,11 @@ services.AddSwaggerGen(options =>
 //Database
 services.AddDbContext<ApplicationDbContext>(optionsAction => optionsAction
     .UseSqlServer(builder.Configuration.GetConnectionString("Default")));
+
+services.AddAutoMapper(Assembly.GetEntryAssembly());
+
+services.AddScoped<IBrandsService, BrandService>();
+services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
 var app = builder.Build();
 

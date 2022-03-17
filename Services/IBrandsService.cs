@@ -12,11 +12,11 @@ public interface IBrandsService
     /// Получить все бренды
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<BrandDto> GetBrands();
+    public Task<IServiceResult<IEnumerable<BrandDto>>> GetBrands();
 
     /// <summary>
     /// Создать бренд
     /// </summary>
     /// <param name="createBrandRequest"></param>
-    public void CreateBrand(CreateBrandRequest createBrandRequest);
+    public Task<IServiceResult> CreateBrand(CreateBrandRequest createBrandRequest);
 }

@@ -14,8 +14,5 @@ public class ApplicationDbContext : DbContext
     /// </summary>
     public DbSet<Brand> Brands { get; set; } = null!;
 
-    /// <summary>
-    /// Размеры
-    /// </summary>
-    public DbSet<Size> Sizes { get; set; } = null!;
+    public DbSet<Size> Sizes { get; set; }
 }
