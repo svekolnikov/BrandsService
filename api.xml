@@ -16,14 +16,14 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:BrandsService.Controllers.BrandsController.Update(System.Int64)">
+        <member name="M:BrandsService.Controllers.BrandsController.Update(BrandsService.Requests.UpdateBrandRequest)">
             <summary>
             Обновить бренд
             </summary>
-            <param name="id"></param>
+            <param name="updateBrandRequest"></param>
             <returns></returns>
         </member>
-        <member name="M:BrandsService.Controllers.BrandsController.Delete(System.Int64)">
+        <member name="M:BrandsService.Controllers.BrandsController.Delete(System.Int32)">
             <summary>
             Удалить бренд
             </summary>
@@ -66,14 +66,14 @@
             Возвращаемые данные из сервиса
             </summary>
         </member>
+        <member name="P:BrandsService.Models.Base.NamedEntity.Name">
+            <summary>
+            Название
+            </summary>
+        </member>
         <member name="T:BrandsService.Models.Brand">
             <summary>
             Бренд (компания)
-            </summary>
-        </member>
-        <member name="P:BrandsService.Models.Brand.Name">
-            <summary>
-            Название
             </summary>
         </member>
         <member name="P:BrandsService.Models.Brand.AllowedSizes">
@@ -119,6 +119,22 @@
             <param name="createBrandRequest"></param>
             <exception cref="T:System.NotImplementedException"></exception>
         </member>
+        <member name="M:BrandsService.Services.BrandService.UpdateBrand(BrandsService.Requests.UpdateBrandRequest)">
+            <summary>
+            Обновить бренд
+            </summary>
+            <param name="updateBrandRequest"></param>
+            <returns></returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:BrandsService.Services.BrandService.SoftDeleteBrand(System.Int32)">
+            <summary>
+            Soft delete
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
         <member name="T:BrandsService.Services.FailureInformation">
             <summary>
             Информация об ошибке
@@ -129,29 +145,41 @@
             Описание ошибки
             </summary>
         </member>
-        <member name="T:BrandsService.Services.IBrandsService">
+        <member name="T:BrandsService.Services.Interfaces.IBrandsService">
             <summary>
             Сервис работы с брендами
             </summary>
         </member>
-        <member name="M:BrandsService.Services.IBrandsService.GetBrands">
+        <member name="M:BrandsService.Services.Interfaces.IBrandsService.GetBrands">
             <summary>
             Получить все бренды
             </summary>
             <returns></returns>
         </member>
-        <member name="M:BrandsService.Services.IBrandsService.CreateBrand(BrandsService.Requests.CreateBrandRequest)">
+        <member name="M:BrandsService.Services.Interfaces.IBrandsService.CreateBrand(BrandsService.Requests.CreateBrandRequest)">
             <summary>
             Создать бренд
             </summary>
             <param name="createBrandRequest"></param>
         </member>
-        <member name="T:BrandsService.Services.IFailureInformation">
+        <member name="M:BrandsService.Services.Interfaces.IBrandsService.UpdateBrand(BrandsService.Requests.UpdateBrandRequest)">
+            <summary>
+            Обновить бренд
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BrandsService.Services.Interfaces.IBrandsService.SoftDeleteBrand(System.Int32)">
+            <summary>
+            Удалить бренд
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:BrandsService.Services.Interfaces.IFailureInformation">
             <summary>
             Информация об ошибке
             </summary>
         </member>
-        <member name="P:BrandsService.Services.IFailureInformation.Description">
+        <member name="P:BrandsService.Services.Interfaces.IFailureInformation.Description">
             <summary>
             Описание ошибки
             </summary>

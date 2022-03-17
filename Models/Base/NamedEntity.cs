@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using BrandsService.Models.Interfaces;
 
-namespace BrandsService.Models;
+namespace BrandsService.Models.Base;
 
 public class NamedEntity : Entity, INamedEntity
 {

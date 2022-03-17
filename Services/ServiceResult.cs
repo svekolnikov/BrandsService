@@ -4,6 +4,7 @@ namespace BrandsService.Services;
 
 public class ServiceResult : IServiceResult
 {
+    public bool IsSuccess { get; set; }
     public IReadOnlyCollection<IFailureInformation>? Failures { get; init; }
 }
 

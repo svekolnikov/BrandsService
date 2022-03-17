@@ -8,6 +8,7 @@ namespace BrandsService;
 /// </summary>
 public interface IServiceResult
 {
+    public bool IsSuccess { get; set; }
     public IReadOnlyCollection<IFailureInformation>? Failures { get; }
 }
 

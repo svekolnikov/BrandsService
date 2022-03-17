@@ -27,7 +27,6 @@ services.AddDbContext<ApplicationDbContext>(optionsAction => optionsAction
 services.AddAutoMapper(Assembly.GetEntryAssembly());
 
 services.AddScoped<IBrandsService, BrandService>();
-
 services.AddScoped<IBrandsRepository, BrandsRepository>();
 
 var app = builder.Build();

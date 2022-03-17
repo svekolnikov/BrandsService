@@ -1,6 +1,6 @@
 ﻿using BrandsService.Models.Interfaces;
 
-namespace BrandsService.Models;
+namespace BrandsService.Models.Base;
 public abstract class Entity : IEntity
 {
     public int Id { get; set; }

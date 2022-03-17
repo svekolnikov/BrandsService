@@ -1,4 +1,6 @@
-﻿namespace BrandsService.Models;
+﻿using BrandsService.Models.Base;
+
+namespace BrandsService.Models;
 
 /// <summary>
 /// Бренд (компания)

@@ -31,7 +31,7 @@ public class BrandsController : ControllerBase
         try
         {
             var serviceResult = await _brandsService.GetBrands();
-            if (serviceResult.Failures?.Count == 0)
+            if (serviceResult.IsSuccess)
                 return Ok(serviceResult);
 
             return BadRequest(serviceResult);
@@ -53,7 +53,7 @@ public class BrandsController : ControllerBase
         try
         {
             var serviceResult = await _brandsService.CreateBrand(createBrandRequest);
-            if (serviceResult.Failures?.Count == 0)
+            if (serviceResult.IsSuccess)
                 return Ok(serviceResult);
 
             return BadRequest(serviceResult);
@@ -68,15 +68,15 @@ public class BrandsController : ControllerBase
     /// <summary>
     /// Обновить бренд
     /// </summary>
-    /// <param name="id"></param>
+    /// <param name="updateBrandRequest"></param>
     /// <returns></returns>
-    [HttpPut("{id}")]
+    [HttpPut("")]
     public async Task<IActionResult> Update(UpdateBrandRequest updateBrandRequest)
     {
         try
         {
             var serviceResult = await _brandsService.UpdateBrand(updateBrandRequest);
-            if (serviceResult.Failures?.Count == 0)
+            if (serviceResult.IsSuccess)
                 return Ok(serviceResult);
 
             return BadRequest(serviceResult);
@@ -99,7 +99,7 @@ public class BrandsController : ControllerBase
         try
         {
             var serviceResult = await _brandsService.SoftDeleteBrand(id);
-            if (serviceResult.Failures?.Count == 0)
+            if (serviceResult.IsSuccess)
                 return Ok(serviceResult);
 
             return BadRequest(serviceResult);

@@ -9,10 +9,10 @@ namespace BrandsService.Services;
 
 public class BrandService : IBrandsService
 {
-    private readonly INamedRepository<Brand> _repository;
+    private readonly IBrandsRepository _repository;
     private readonly IMapper _mapper;
 
-    public BrandService(INamedRepository<Brand> repository, IMapper mapper)
+    public BrandService(IBrandsRepository repository, IMapper mapper)
     {
         _repository = repository;
         _mapper = mapper;
@@ -24,12 +24,13 @@ public class BrandService : IBrandsService
     /// <returns></returns>
     public async Task<IServiceResult<IEnumerable<BrandDto>>> GetBrands()
     {
-        var brandsEntities = await _repository.GetAllAsync();
+        var brandsEntities = await _repository.GetAllWithSizesAsync();
 
         var brandsDto = _mapper.Map<List<BrandDto>>(brandsEntities); 
 
         return new ServiceResult<IEnumerable<BrandDto>>
         {
+            IsSuccess = true,
             Data = brandsDto
         };
     }
@@ -51,6 +52,7 @@ public class BrandService : IBrandsService
         {
             return new ServiceResult
             {
+                IsSuccess = false,
                 Failures = new List<IFailureInformation>
                 {
                     new FailureInformation{Description = "В списке размеров бренда не может быть элементов с одинаковым размером РФ"}
@@ -64,6 +66,7 @@ public class BrandService : IBrandsService
         {
             return new ServiceResult
             {
+                IsSuccess = false,
                 Failures = new List<IFailureInformation>
                 {
                     new FailureInformation{Description = $"Бренд с именем [{createBrandRequest.Name}] уже существует"}
@@ -77,6 +80,7 @@ public class BrandService : IBrandsService
 
         return new ServiceResult
         {
+            IsSuccess = true,
             Failures = new List<IFailureInformation>()
         };
     }
@@ -89,7 +93,24 @@ public class BrandService : IBrandsService
     /// <exception cref="NotImplementedException"></exception>
     public async Task<IServiceResult> UpdateBrand(UpdateBrandRequest updateBrandRequest)
     {
-        throw new NotImplementedException();
+        var entity = await _repository.GetByIdAsync(updateBrandRequest.Id);
+        if (entity is null)
+        {
+            return new ServiceResult
+                {
+                    IsSuccess = false,
+                    Failures = new List<IFailureInformation>
+                    {
+                        new FailureInformation {Description = "Бренд не найден"}
+                    }
+                };
+        }
+
+        _mapper.Map(updateBrandRequest, entity);
+
+        await _repository.UpdateAsync(entity);
+
+        return new ServiceResult {Failures = new List<IFailureInformation>()};
     }
 
     /// <summary>

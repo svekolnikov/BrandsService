@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using BrandsService.Models.Base;
 
 namespace BrandsService.Models;
 
@@ -18,4 +19,6 @@ public class Size : Entity
     /// </summary>
     [Required]
     public string Own { get; set; } = null!;
+
+    public int BrandId { get; set; }
 }
