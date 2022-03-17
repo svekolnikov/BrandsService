@@ -1,7 +1,7 @@
 ﻿using BrandsService.DTO;
 using BrandsService.Requests;
 
-namespace BrandsService.Services;
+namespace BrandsService.Services.Interfaces;
 
 /// <summary>
 /// Сервис работы с брендами

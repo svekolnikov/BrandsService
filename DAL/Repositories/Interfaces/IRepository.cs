@@ -1,6 +1,7 @@
 ﻿using BrandsService.Models;
+using BrandsService.Models.Interfaces;
 
-namespace BrandsService.DAL.Repositories;
+namespace BrandsService.DAL.Repositories.Interfaces;
 
 public interface IRepository<T> where T : class, IEntity
 {

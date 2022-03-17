@@ -1,4 +1,5 @@
 ﻿using BrandsService.Services;
+using BrandsService.Services.Interfaces;
 
 namespace BrandsService;
 

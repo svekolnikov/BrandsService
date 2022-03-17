@@ -1,6 +1,7 @@
 ﻿using System.Runtime.CompilerServices;
 using BrandsService.Requests;
 using BrandsService.Services;
+using BrandsService.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BrandsService.Controllers;

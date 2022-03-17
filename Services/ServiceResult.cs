@@ -1,4 +1,6 @@
-﻿namespace BrandsService.Services;
+﻿using BrandsService.Services.Interfaces;
+
+namespace BrandsService.Services;
 
 public class ServiceResult : IServiceResult
 {

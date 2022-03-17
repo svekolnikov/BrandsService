@@ -1,7 +1,9 @@
 using System.Reflection;
 using BrandsService.DAL.Context;
 using BrandsService.DAL.Repositories;
+using BrandsService.DAL.Repositories.Interfaces;
 using BrandsService.Services;
+using BrandsService.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,10 +23,12 @@ services.AddSwaggerGen(options =>
 services.AddDbContext<ApplicationDbContext>(optionsAction => optionsAction
     .UseSqlServer(builder.Configuration.GetConnectionString("Default")));
 
+//Mapper
 services.AddAutoMapper(Assembly.GetEntryAssembly());
 
 services.AddScoped<IBrandsService, BrandService>();
-services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+
+services.AddScoped<IBrandsRepository, BrandsRepository>();
 
 var app = builder.Build();
 

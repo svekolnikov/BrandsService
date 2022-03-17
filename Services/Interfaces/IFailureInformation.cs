@@ -1,4 +1,4 @@
-﻿namespace BrandsService.Services;
+﻿namespace BrandsService.Services.Interfaces;
 
 /// <summary>
 /// Информация об ошибке

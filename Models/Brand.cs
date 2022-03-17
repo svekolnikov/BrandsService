@@ -5,7 +5,7 @@ namespace BrandsService.Models;
 /// <summary>
 /// Бренд (компания)
 /// </summary>
-public class Brand : Entity
+public class Brand : NamedEntity
 {
     /// <summary>
     /// Название

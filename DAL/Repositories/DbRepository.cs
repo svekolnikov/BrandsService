@@ -1,18 +1,20 @@
 ﻿using BrandsService.DAL.Context;
+using BrandsService.DAL.Repositories.Interfaces;
 using BrandsService.Models;
+using BrandsService.Models.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace BrandsService.DAL.Repositories;
 
-public class Repository<T> : IRepository<T> where T : class, IEntity
+public class DbRepository<T> : IRepository<T> where T : class, IEntity
 {
     private readonly ApplicationDbContext _dbContext;
-    private readonly ILogger<Repository<T>> _logger;
+    private readonly ILogger<DbRepository<T>> _logger;
 
     protected DbSet<T> Set { get; }
     protected virtual IQueryable<T> Items => Set;
 
-    public Repository(ApplicationDbContext dbContext, ILogger<Repository<T>> logger)
+    public DbRepository(ApplicationDbContext dbContext, ILogger<DbRepository<T>> logger)
     {
         _dbContext = dbContext;
         _logger = logger;
