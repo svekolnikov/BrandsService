@@ -80,4 +80,26 @@ public class BrandService : IBrandsService
             Failures = new List<IFailureInformation>()
         };
     }
+
+    /// <summary>
+    /// Обновить бренд
+    /// </summary>
+    /// <param name="updateBrandRequest"></param>
+    /// <returns></returns>
+    /// <exception cref="NotImplementedException"></exception>
+    public async Task<IServiceResult> UpdateBrand(UpdateBrandRequest updateBrandRequest)
+    {
+        throw new NotImplementedException();
+    }
+
+    /// <summary>
+    /// Soft delete
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    /// <exception cref="NotImplementedException"></exception>
+    public async Task<IServiceResult> SoftDeleteBrand(int id)
+    {
+        throw new NotImplementedException();
+    }
 }

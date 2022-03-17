@@ -71,9 +71,21 @@ public class BrandsController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpPut("{id}")]
-    public IActionResult Update(long id)
+    public async Task<IActionResult> Update(UpdateBrandRequest updateBrandRequest)
     {
-        return Ok();
+        try
+        {
+            var serviceResult = await _brandsService.UpdateBrand(updateBrandRequest);
+            if (serviceResult.Failures?.Count == 0)
+                return Ok(serviceResult);
+
+            return BadRequest(serviceResult);
+        }
+        catch (Exception e)
+        {
+            LogError(e);
+            return StatusCode(500);
+        }
     }
 
     /// <summary>
@@ -82,9 +94,21 @@ public class BrandsController : ControllerBase
     /// <param name="ind"></param>
     /// <returns></returns>
     [HttpDelete("{id}")]
-    public IActionResult Delete(long ind)
+    public async Task<IActionResult> Delete(int id)
     {
-        return Ok();
+        try
+        {
+            var serviceResult = await _brandsService.SoftDeleteBrand(id);
+            if (serviceResult.Failures?.Count == 0)
+                return Ok(serviceResult);
+
+            return BadRequest(serviceResult);
+        }
+        catch (Exception e)
+        {
+            LogError(e);
+            return StatusCode(500);
+        }
     }
 
 

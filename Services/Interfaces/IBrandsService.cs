@@ -19,4 +19,16 @@ public interface IBrandsService
     /// </summary>
     /// <param name="createBrandRequest"></param>
     public Task<IServiceResult> CreateBrand(CreateBrandRequest createBrandRequest);
+
+    /// <summary>
+    /// Обновить бренд
+    /// </summary>
+    /// <returns></returns>
+    public Task<IServiceResult> UpdateBrand(UpdateBrandRequest updateBrandRequest);
+
+    /// <summary>
+    /// Удалить бренд
+    /// </summary>
+    /// <returns></returns>
+    public Task<IServiceResult> SoftDeleteBrand(int id);
 }

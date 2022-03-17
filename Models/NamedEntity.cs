@@ -6,6 +6,9 @@ namespace BrandsService.Models;
 
 public class NamedEntity : Entity, INamedEntity
 {
+    /// <summary>
+    /// Название
+    /// </summary>
     [Column(TypeName = "nvarchar(200)")]
     [Required]
     public string Name { get; set; } = null!;
