@@ -5,6 +5,6 @@
 /// </summary>
 public class SizeDto
 {
-    public string RF { get; set; } = null!;
+    public string Rf { get; set; } = null!;
     public string Own { get; set; } = null!;
 }

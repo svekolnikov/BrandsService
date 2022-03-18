@@ -29,6 +29,8 @@ services.AddAutoMapper(Assembly.GetEntryAssembly());
 services.AddScoped<IBrandsService, BrandService>();
 services.AddScoped<IBrandsRepository, BrandsRepository>();
 
+services.AddScoped<ISizesService, SizesService>();
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())

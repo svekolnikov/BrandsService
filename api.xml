@@ -10,24 +10,50 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:BrandsService.Controllers.BrandsController.Create(BrandsService.Requests.CreateBrandRequest)">
+        <member name="M:BrandsService.Controllers.BrandsController.CreateAsync(BrandsService.Requests.CreateBrandRequest)">
             <summary>
             Создать бренд
             </summary>
             <returns></returns>
         </member>
-        <member name="M:BrandsService.Controllers.BrandsController.Update(BrandsService.Requests.UpdateBrandRequest)">
+        <member name="M:BrandsService.Controllers.BrandsController.UpdateAsync(BrandsService.Requests.UpdateBrandRequest)">
             <summary>
             Обновить бренд
             </summary>
             <param name="updateBrandRequest"></param>
             <returns></returns>
         </member>
-        <member name="M:BrandsService.Controllers.BrandsController.Delete(System.Int32)">
+        <member name="M:BrandsService.Controllers.BrandsController.SoftDeleteAsync(System.Int32)">
             <summary>
-            Удалить бренд
+            Soft delete
             </summary>
-            <param name="ind"></param>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BrandsService.Controllers.SizesController.GetAllAsync">
+            <summary>
+            Получить все размеры
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BrandsService.Controllers.SizesController.CreateAsync(BrandsService.Requests.CreateSizeRequest)">
+            <summary>
+            Создать размер
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BrandsService.Controllers.SizesController.UpdateAsync(BrandsService.Requests.UpdateSizeRequest)">
+            <summary>
+            Обновить размер
+            </summary>
+            <param name="updateBrandRequest"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BrandsService.Controllers.SizesController.SoftDeleteAsync(System.Int32)">
+            <summary>
+            Soft delete
+            </summary>
+            <param name="id"></param>
             <returns></returns>
         </member>
         <member name="P:BrandsService.DAL.Context.ApplicationDbContext.Brands">
@@ -86,7 +112,7 @@
             Размер, устанавливает связь размера бренда и размера РФ
             </summary>
         </member>
-        <member name="P:BrandsService.Models.Size.RF">
+        <member name="P:BrandsService.Models.Size.Rf">
             <summary>
             Размер РФ
             </summary>
@@ -106,34 +132,32 @@
             Список допустимых размеров одежды
             </summary>
         </member>
-        <member name="M:BrandsService.Services.BrandService.GetBrands">
+        <member name="M:BrandsService.Services.BrandService.GetAllAsync">
             <summary>
             Получить все бренды
             </summary>
             <returns></returns>
         </member>
-        <member name="M:BrandsService.Services.BrandService.CreateBrand(BrandsService.Requests.CreateBrandRequest)">
+        <member name="M:BrandsService.Services.BrandService.CreateAsync(BrandsService.Requests.CreateBrandRequest)">
             <summary>
             Создать бренд
             </summary>
             <param name="createBrandRequest"></param>
-            <exception cref="T:System.NotImplementedException"></exception>
+            <returns></returns>
         </member>
-        <member name="M:BrandsService.Services.BrandService.UpdateBrand(BrandsService.Requests.UpdateBrandRequest)">
+        <member name="M:BrandsService.Services.BrandService.UpdateAsync(BrandsService.Requests.UpdateBrandRequest)">
             <summary>
             Обновить бренд
             </summary>
             <param name="updateBrandRequest"></param>
             <returns></returns>
-            <exception cref="T:System.NotImplementedException"></exception>
         </member>
-        <member name="M:BrandsService.Services.BrandService.SoftDeleteBrand(System.Int32)">
+        <member name="M:BrandsService.Services.BrandService.SoftDeleteAsync(System.Int32)">
             <summary>
             Soft delete
             </summary>
             <param name="id"></param>
             <returns></returns>
-            <exception cref="T:System.NotImplementedException"></exception>
         </member>
         <member name="T:BrandsService.Services.FailureInformation">
             <summary>
@@ -150,27 +174,27 @@
             Сервис работы с брендами
             </summary>
         </member>
-        <member name="M:BrandsService.Services.Interfaces.IBrandsService.GetBrands">
+        <member name="M:BrandsService.Services.Interfaces.IBrandsService.GetAllAsync">
             <summary>
             Получить все бренды
             </summary>
             <returns></returns>
         </member>
-        <member name="M:BrandsService.Services.Interfaces.IBrandsService.CreateBrand(BrandsService.Requests.CreateBrandRequest)">
+        <member name="M:BrandsService.Services.Interfaces.IBrandsService.CreateAsync(BrandsService.Requests.CreateBrandRequest)">
             <summary>
             Создать бренд
             </summary>
             <param name="createBrandRequest"></param>
         </member>
-        <member name="M:BrandsService.Services.Interfaces.IBrandsService.UpdateBrand(BrandsService.Requests.UpdateBrandRequest)">
+        <member name="M:BrandsService.Services.Interfaces.IBrandsService.UpdateAsync(BrandsService.Requests.UpdateBrandRequest)">
             <summary>
             Обновить бренд
             </summary>
             <returns></returns>
         </member>
-        <member name="M:BrandsService.Services.Interfaces.IBrandsService.SoftDeleteBrand(System.Int32)">
+        <member name="M:BrandsService.Services.Interfaces.IBrandsService.SoftDeleteAsync(System.Int32)">
             <summary>
-            Удалить бренд
+            Soft delete
             </summary>
             <returns></returns>
         </member>
@@ -183,6 +207,37 @@
             <summary>
             Описание ошибки
             </summary>
+        </member>
+        <member name="T:BrandsService.Services.Interfaces.ISizesService">
+            <summary>
+            Сервис работы с размерами
+            </summary>
+        </member>
+        <member name="M:BrandsService.Services.Interfaces.ISizesService.GetAllAsync">
+            <summary>
+            Получить все размеры
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BrandsService.Services.Interfaces.ISizesService.CreateAsync(BrandsService.Requests.CreateSizeRequest)">
+            <summary>
+            Создать размер
+            </summary>
+            <param name="createSizeRequest"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BrandsService.Services.Interfaces.ISizesService.UpdateAsync(BrandsService.Requests.UpdateSizeRequest)">
+            <summary>
+            Обновить размер
+            </summary>
+            <param name="updateSizeRequest"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BrandsService.Services.Interfaces.ISizesService.SoftDeleteAsync(System.Int32)">
+            <summary>
+            Soft delete
+            </summary>
+            <returns></returns>
         </member>
     </members>
 </doc>

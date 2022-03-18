@@ -12,23 +12,23 @@ public interface IBrandsService
     /// Получить все бренды
     /// </summary>
     /// <returns></returns>
-    public Task<IServiceResult<IEnumerable<BrandDto>>> GetBrands();
+    public Task<IServiceResult<IEnumerable<BrandDto>>> GetAllAsync();
 
     /// <summary>
     /// Создать бренд
     /// </summary>
     /// <param name="createBrandRequest"></param>
-    public Task<IServiceResult> CreateBrand(CreateBrandRequest createBrandRequest);
+    public Task<IServiceResult> CreateAsync(CreateBrandRequest createBrandRequest);
 
     /// <summary>
     /// Обновить бренд
     /// </summary>
     /// <returns></returns>
-    public Task<IServiceResult> UpdateBrand(UpdateBrandRequest updateBrandRequest);
+    public Task<IServiceResult> UpdateAsync(UpdateBrandRequest updateBrandRequest);
 
     /// <summary>
-    /// Удалить бренд
+    /// Soft delete
     /// </summary>
     /// <returns></returns>
-    public Task<IServiceResult> SoftDeleteBrand(int id);
+    public Task<IServiceResult> SoftDeleteAsync(int id);
 }

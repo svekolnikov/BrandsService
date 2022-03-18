@@ -12,7 +12,7 @@ public class Size : Entity
     /// Размер РФ
     /// </summary>
     [Required]
-    public string RF { get; set; } = null!;
+    public string Rf { get; set; } = null!;
 
     /// <summary>
     /// Размер бренда

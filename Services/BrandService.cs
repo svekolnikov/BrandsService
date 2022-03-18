@@ -22,7 +22,7 @@ public class BrandService : IBrandsService
     /// Получить все бренды
     /// </summary>
     /// <returns></returns>
-    public async Task<IServiceResult<IEnumerable<BrandDto>>> GetBrands()
+    public async Task<IServiceResult<IEnumerable<BrandDto>>> GetAllAsync()
     {
         var brandsEntities = await _repository.GetAllWithSizesAsync();
 
@@ -39,11 +39,11 @@ public class BrandService : IBrandsService
     /// Создать бренд
     /// </summary>
     /// <param name="createBrandRequest"></param>
-    /// <exception cref="NotImplementedException"></exception>
-    public async Task<IServiceResult> CreateBrand(CreateBrandRequest createBrandRequest)
+    /// <returns></returns>
+    public async Task<IServiceResult> CreateAsync(CreateBrandRequest createBrandRequest)
     {
         var duplicate = createBrandRequest
-            .AllowedSizes.GroupBy(x => x.RF)
+            .AllowedSizes.GroupBy(x => x.Rf)
             .Where(x => x.Count() > 1)
             .Select(x => x.Key)
             .Count();
@@ -90,8 +90,7 @@ public class BrandService : IBrandsService
     /// </summary>
     /// <param name="updateBrandRequest"></param>
     /// <returns></returns>
-    /// <exception cref="NotImplementedException"></exception>
-    public async Task<IServiceResult> UpdateBrand(UpdateBrandRequest updateBrandRequest)
+    public async Task<IServiceResult> UpdateAsync(UpdateBrandRequest updateBrandRequest)
     {
         var entity = await _repository.GetByIdWithSizesAsync(updateBrandRequest.Id);
         if (entity is null)
@@ -118,9 +117,23 @@ public class BrandService : IBrandsService
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    /// <exception cref="NotImplementedException"></exception>
-    public async Task<IServiceResult> SoftDeleteBrand(int id)
+    public async Task<IServiceResult> SoftDeleteAsync(int id)
     {
-        throw new NotImplementedException();
+        var entity = await _repository.GetByIdAsync(id);
+        if (entity is null)
+        {
+            return new ServiceResult
+            {
+                IsSuccess = false,
+                Failures = new List<IFailureInformation>
+                {
+                    new FailureInformation {Description = "Бренд не найден"}
+                }
+            };
+        }
+
+        await _repository.SoftDeleteAsync(id);
+
+        return new ServiceResult {IsSuccess = true, Failures = new List<IFailureInformation>()};
     }
 }

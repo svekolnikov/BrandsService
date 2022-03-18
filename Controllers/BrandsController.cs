@@ -1,6 +1,5 @@
 ﻿using System.Runtime.CompilerServices;
 using BrandsService.Requests;
-using BrandsService.Services;
 using BrandsService.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -30,7 +29,7 @@ public class BrandsController : ControllerBase
     {
         try
         {
-            var serviceResult = await _brandsService.GetBrands();
+            var serviceResult = await _brandsService.GetAllAsync();
             if (serviceResult.IsSuccess)
                 return Ok(serviceResult);
 
@@ -48,11 +47,11 @@ public class BrandsController : ControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpPost("")]
-    public async Task<IActionResult> Create(CreateBrandRequest createBrandRequest)
+    public async Task<IActionResult> CreateAsync(CreateBrandRequest createBrandRequest)
     {
         try
         {
-            var serviceResult = await _brandsService.CreateBrand(createBrandRequest);
+            var serviceResult = await _brandsService.CreateAsync(createBrandRequest);
             if (serviceResult.IsSuccess)
                 return Ok(serviceResult);
 
@@ -71,11 +70,11 @@ public class BrandsController : ControllerBase
     /// <param name="updateBrandRequest"></param>
     /// <returns></returns>
     [HttpPut("")]
-    public async Task<IActionResult> Update(UpdateBrandRequest updateBrandRequest)
+    public async Task<IActionResult> UpdateAsync(UpdateBrandRequest updateBrandRequest)
     {
         try
         {
-            var serviceResult = await _brandsService.UpdateBrand(updateBrandRequest);
+            var serviceResult = await _brandsService.UpdateAsync(updateBrandRequest);
             if (serviceResult.IsSuccess)
                 return Ok(serviceResult);
 
@@ -94,11 +93,11 @@ public class BrandsController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete(int id)
+    public async Task<IActionResult> SoftDeleteAsync(int id)
     {
         try
         {
-            var serviceResult = await _brandsService.SoftDeleteBrand(id);
+            var serviceResult = await _brandsService.SoftDeleteAsync(id);
             if (serviceResult.IsSuccess)
                 return Ok(serviceResult);
 

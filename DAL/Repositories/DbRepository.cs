@@ -36,6 +36,7 @@ public class DbRepository<T> : IRepository<T> where T : class, IEntity
 
     public async Task<int> AddAsync(T item, CancellationToken cancel = default)
     {
+        item.IsDeleted = false;
         await Set.AddAsync(item, cancel).ConfigureAwait(false);
         await _dbContext.SaveChangesAsync(cancel);
         _logger.LogInformation("Entity {0} added to database", item);
@@ -52,7 +53,7 @@ public class DbRepository<T> : IRepository<T> where T : class, IEntity
         return true;
     }
 
-    public async Task<bool> DeleteAsync(int id, CancellationToken cancel = default)
+    public async Task<bool> SoftDeleteAsync(int id, CancellationToken cancel = default)
     {
         var entity = await GetByIdAsync(id, cancel).ConfigureAwait(false);
         if (entity is null)
@@ -60,7 +61,8 @@ public class DbRepository<T> : IRepository<T> where T : class, IEntity
             _logger.LogInformation("Entity {0} not found", id);
             return false;
         }
-        _dbContext.Entry(entity).State = EntityState.Deleted;
+        entity.IsDeleted = true;
+        _dbContext.Entry(entity).State = EntityState.Modified;
         await _dbContext.SaveChangesAsync(cancel);
 
         _logger.LogInformation("Entity {0} deleted from database", id);
