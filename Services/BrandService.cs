@@ -93,7 +93,7 @@ public class BrandService : IBrandsService
     /// <exception cref="NotImplementedException"></exception>
     public async Task<IServiceResult> UpdateBrand(UpdateBrandRequest updateBrandRequest)
     {
-        var entity = await _repository.GetByIdAsync(updateBrandRequest.Id);
+        var entity = await _repository.GetByIdWithSizesAsync(updateBrandRequest.Id);
         if (entity is null)
         {
             return new ServiceResult

@@ -89,9 +89,9 @@ public class BrandsController : ControllerBase
     }
 
     /// <summary>
-    /// Удалить бренд
+    /// Soft delete
     /// </summary>
-    /// <param name="ind"></param>
+    /// <param name="id"></param>
     /// <returns></returns>
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)

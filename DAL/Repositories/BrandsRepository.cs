@@ -7,14 +7,9 @@ namespace BrandsService.DAL.Repositories;
 
 public class BrandsRepository : DbNamedRepository<Brand>, IBrandsRepository
 {
-    private readonly ApplicationDbContext _dbContext;
-    private readonly ILogger<BrandsRepository> _logger;
-
     public BrandsRepository(ApplicationDbContext dbContext, ILogger<BrandsRepository> logger) 
         : base(dbContext, logger)
     {
-        _dbContext = dbContext;
-        _logger = logger;
     }
 
     public async Task<IEnumerable<Brand>> GetAllWithSizesAsync(CancellationToken cancel = default)
@@ -22,6 +17,15 @@ public class BrandsRepository : DbNamedRepository<Brand>, IBrandsRepository
         var result = await Items
             .Include(x => x.AllowedSizes)
             .ToArrayAsync(cancel);
+
+        return result;
+    }
+
+    public async Task<Brand?> GetByIdWithSizesAsync(int id, CancellationToken cancel = default)
+    {
+        var result = await Set
+            .Include(x => x.AllowedSizes)
+            .FirstOrDefaultAsync(x => x.Id == id, cancel);
 
         return result;
     }
