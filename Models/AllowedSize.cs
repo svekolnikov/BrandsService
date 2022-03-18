@@ -6,7 +6,7 @@ namespace BrandsService.Models;
 /// <summary>
 /// Размер, устанавливает связь размера бренда и размера РФ
 /// </summary>
-public class Size : Entity
+public class AllowedSize : Entity
 {
     /// <summary>
     /// Размер РФ

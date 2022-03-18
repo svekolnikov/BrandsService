@@ -12,5 +12,5 @@ public class CreateBrandRequest
     /// <summary>
     /// Список допустимых размеров одежды
     /// </summary>
-    public IEnumerable<SizeDto> AllowedSizes { get; set; } = null!;
+    public IEnumerable<AllowedSizeDto> AllowedSizes { get; set; } = null!;
 }

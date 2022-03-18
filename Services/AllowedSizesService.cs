@@ -1,12 +1,21 @@
-﻿using BrandsService.DTO;
+﻿using BrandsService.DAL.Repositories.Interfaces;
+using BrandsService.DTO;
+using BrandsService.Models;
 using BrandsService.Requests;
 using BrandsService.Services.Interfaces;
 
 namespace BrandsService.Services
 {
-    public class SizesService : ISizesService
+    public class AllowedSizesService : IAllowedSizesService
     {
-        public async Task<IServiceResult<IEnumerable<SizeDto>>> GetAllAsync()
+        private readonly IRepository<AllowedSize> _repository;
+
+        public AllowedSizesService(IRepository<AllowedSize> repository)
+        {
+            _repository = repository;
+        }
+
+        public async Task<IServiceResult<IEnumerable<AllowedSizeDto>>> GetAllAsync()
         {
             throw new NotImplementedException();
         }

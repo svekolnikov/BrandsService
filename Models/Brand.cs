@@ -10,5 +10,5 @@ public class Brand : NamedEntity
     /// <summary>
     /// Список допустимых размеров одежды
     /// </summary>
-    public IEnumerable<Size> AllowedSizes { get; set; } = null!;
+    public IEnumerable<AllowedSize> AllowedSizes { get; set; } = null!;
 }

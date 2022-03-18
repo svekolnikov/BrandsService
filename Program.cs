@@ -26,10 +26,12 @@ services.AddDbContext<ApplicationDbContext>(optionsAction => optionsAction
 //Mapper
 services.AddAutoMapper(Assembly.GetEntryAssembly());
 
+services.AddScoped(typeof(IRepository<>), typeof(DbRepository<>));
+
 services.AddScoped<IBrandsService, BrandService>();
 services.AddScoped<IBrandsRepository, BrandsRepository>();
 
-services.AddScoped<ISizesService, SizesService>();
+services.AddScoped<IAllowedSizesService, AllowedSizesService>();
 
 var app = builder.Build();
 

@@ -12,7 +12,7 @@ public class EntitiesProfile : Profile
         CreateMap<Brand, BrandDto>();
         CreateMap<CreateBrandRequest, Brand>();
         CreateMap<UpdateBrandRequest, Brand>();
-        CreateMap<SizeDto, Size>();
-        CreateMap<Size, SizeDto>();
+        CreateMap<AllowedSizeDto, AllowedSize>();
+        CreateMap<AllowedSize, AllowedSizeDto>();
     }
 }

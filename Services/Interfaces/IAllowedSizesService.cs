@@ -6,13 +6,13 @@ namespace BrandsService.Services.Interfaces;
 /// <summary>
 /// Сервис работы с размерами
 /// </summary>
-public interface ISizesService
+public interface IAllowedSizesService
 {
     /// <summary>
     /// Получить все размеры
     /// </summary>
     /// <returns></returns>
-    public Task<IServiceResult<IEnumerable<SizeDto>>> GetAllAsync();
+    public Task<IServiceResult<IEnumerable<AllowedSizeDto>>> GetAllAsync();
 
     /// <summary>
     /// Создать размер

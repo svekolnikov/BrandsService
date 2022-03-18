@@ -3,7 +3,7 @@
 /// <summary>
 /// DTO размера
 /// </summary>
-public class SizeDto
+public class AllowedSizeDto
 {
     public string Rf { get; set; } = null!;
     public string Own { get; set; } = null!;

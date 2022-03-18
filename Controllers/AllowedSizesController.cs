@@ -5,17 +5,17 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BrandsService.Controllers
 {
-    [Route("api/sizes")]
+    [Route("api/allowed-sizes")]
     [ApiController]
-    public class SizesController : ControllerBase
+    public class AllowedSizesController : ControllerBase
     {
-        private readonly ILogger<SizesController> _logger;
-        private readonly ISizesService _sizesService;
+        private readonly ILogger<AllowedSizesController> _logger;
+        private readonly IAllowedSizesService _allowedSizesService;
 
-        public SizesController(ILogger<SizesController> logger, ISizesService sizesService)
+        public AllowedSizesController(ILogger<AllowedSizesController> logger, IAllowedSizesService allowedSizesService)
         {
             _logger = logger;
-            _sizesService = sizesService;
+            _allowedSizesService = allowedSizesService;
         }
 
         /// <summary>
@@ -27,7 +27,7 @@ namespace BrandsService.Controllers
         {
             try
             {
-                var serviceResult = await _sizesService.GetAllAsync();
+                var serviceResult = await _allowedSizesService.GetAllAsync();
                 if (serviceResult.IsSuccess)
                     return Ok(serviceResult);
 
@@ -49,7 +49,7 @@ namespace BrandsService.Controllers
         {
             try
             {
-                var serviceResult = await _sizesService.CreateAsync(createSizeRequest);
+                var serviceResult = await _allowedSizesService.CreateAsync(createSizeRequest);
                 if (serviceResult.IsSuccess)
                     return Ok(serviceResult);
 
@@ -72,7 +72,7 @@ namespace BrandsService.Controllers
         {
             try
             {
-                var serviceResult = await _sizesService.UpdateAsync(updateSizeRequest);
+                var serviceResult = await _allowedSizesService.UpdateAsync(updateSizeRequest);
                 if (serviceResult.IsSuccess)
                     return Ok(serviceResult);
 
@@ -95,7 +95,7 @@ namespace BrandsService.Controllers
         {
             try
             {
-                var serviceResult = await _sizesService.SoftDeleteAsync(id);
+                var serviceResult = await _allowedSizesService.SoftDeleteAsync(id);
                 if (serviceResult.IsSuccess)
                     return Ok(serviceResult);
 

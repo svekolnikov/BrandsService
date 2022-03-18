@@ -12,6 +12,6 @@ namespace BrandsService.Requests
         public string Name { get; set; } = null!;
 
         [Required] 
-        public List<SizeDto> AllowedSizes { get; set; } = null!;
+        public List<AllowedSizeDto> AllowedSizes { get; set; } = null!;
     }
 }
