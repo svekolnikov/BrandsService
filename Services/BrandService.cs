@@ -9,22 +9,23 @@ namespace BrandsService.Services;
 
 public class BrandService : IBrandsService
 {
-    private readonly IBrandsRepository _repository;
+    private readonly IBrandsRepository _brandRepository;
+    private readonly IAllowedSizesRepository _sizeRepository;
     private readonly IMapper _mapper;
 
-    public BrandService(IBrandsRepository repository, IMapper mapper)
+    public BrandService(
+        IBrandsRepository brandRepository, 
+        IAllowedSizesRepository sizeRepository, 
+        IMapper mapper)
     {
-        _repository = repository;
+        _brandRepository = brandRepository;
+        _sizeRepository = sizeRepository;
         _mapper = mapper;
     }
-
-    /// <summary>
-    /// Получить все бренды
-    /// </summary>
-    /// <returns></returns>
-    public async Task<IServiceResult<IEnumerable<BrandDto>>> GetAllAsync()
+    
+    public async Task<IServiceResult<IEnumerable<BrandDto>>> GetAllBrandsAsync()
     {
-        var brandsEntities = await _repository.GetAllWithSizesAsync();
+        var brandsEntities = await _brandRepository.GetAllWithSizesAsync();
 
         var brandsDto = _mapper.Map<List<BrandDto>>(brandsEntities); 
 
@@ -34,35 +35,10 @@ public class BrandService : IBrandsService
             Data = brandsDto
         };
     }
-
-    /// <summary>
-    /// Создать бренд
-    /// </summary>
-    /// <param name="createBrandRequest"></param>
-    /// <returns></returns>
-    public async Task<IServiceResult> CreateAsync(CreateBrandRequest createBrandRequest)
+    
+    public async Task<IServiceResult> CreateBrandAsync(CreateBrandRequest createBrandRequest)
     {
-        var duplicate = createBrandRequest
-            .AllowedSizes.GroupBy(x => x.Rf)
-            .Where(x => x.Count() > 1)
-            .Select(x => x.Key)
-            .Count();
-
-        if (duplicate > 0)
-        {
-            return new ServiceResult
-            {
-                IsSuccess = false,
-                Failures = new List<IFailureInformation>
-                {
-                    new FailureInformation{Description = "В списке размеров бренда не может быть элементов с одинаковым размером РФ"}
-                }
-            };
-        }
-
-        var sameNameEntity = await _repository.GetByNameAsync(createBrandRequest.Name);
-
-        if (sameNameEntity is not null)
+        if (await _brandRepository.GetByNameAsync(createBrandRequest.Name) is not null)
         {
             return new ServiceResult
             {
@@ -75,8 +51,7 @@ public class BrandService : IBrandsService
         }
 
         var brandEntity = _mapper.Map<Brand>(createBrandRequest);
-
-        await _repository.AddAsync(brandEntity);
+        await _brandRepository.AddAsync(brandEntity);
 
         return new ServiceResult
         {
@@ -84,16 +59,11 @@ public class BrandService : IBrandsService
             Failures = new List<IFailureInformation>()
         };
     }
-
-    /// <summary>
-    /// Обновить бренд
-    /// </summary>
-    /// <param name="updateBrandRequest"></param>
-    /// <returns></returns>
-    public async Task<IServiceResult> UpdateAsync(UpdateBrandRequest updateBrandRequest)
+    
+    public async Task<IServiceResult> UpdateBrandAsync(UpdateBrandRequest updateBrandRequest)
     {
-        var entity = await _repository.GetByIdWithSizesAsync(updateBrandRequest.Id);
-        if (entity is null)
+        var brandEntity = await _brandRepository.GetByIdWithSizesAsync(updateBrandRequest.Id);
+        if (brandEntity is null)
         {
             return new ServiceResult
                 {
@@ -104,22 +74,29 @@ public class BrandService : IBrandsService
                     }
                 };
         }
+        
+        if (await _brandRepository.GetByNameAsync(updateBrandRequest.Name) is not null)
+        {
+            return new ServiceResult
+            {
+                IsSuccess = false,
+                Failures = new List<IFailureInformation>
+                {
+                    new FailureInformation{Description = $"Бренд с именем [{updateBrandRequest.Name}] уже существует"}
+                }
+            };
+        }
 
-        _mapper.Map(updateBrandRequest, entity);
+        _mapper.Map(updateBrandRequest, brandEntity);
 
-        await _repository.UpdateAsync(entity);
+        await _brandRepository.UpdateAsync(brandEntity);
 
         return new ServiceResult {Failures = new List<IFailureInformation>()};
     }
-
-    /// <summary>
-    /// Soft delete
-    /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
-    public async Task<IServiceResult> SoftDeleteAsync(int id)
+    
+    public async Task<IServiceResult> SoftDeleteBrandAsync(int id)
     {
-        var entity = await _repository.GetByIdAsync(id);
+        var entity = await _brandRepository.GetByIdAsync(id);
         if (entity is null)
         {
             return new ServiceResult
@@ -132,8 +109,165 @@ public class BrandService : IBrandsService
             };
         }
 
-        await _repository.SoftDeleteAsync(id);
+        await _brandRepository.SoftDeleteAsync(id);
 
         return new ServiceResult {IsSuccess = true, Failures = new List<IFailureInformation>()};
+    }
+
+
+    public async Task<IServiceResult<IEnumerable<AllowedSizeDto>>> GetAllSizesByBrandIdAsync(int id)
+    {
+        var brandEntity = await _brandRepository.GetByIdWithSizesAsync(id);
+        if (brandEntity is null)
+        {
+            return new ServiceResult<IEnumerable<AllowedSizeDto>>
+            {
+                IsSuccess = false,
+                Failures = new List<IFailureInformation>
+                {
+                    new FailureInformation {Description = "Бренд не найден"}
+                }
+            };
+        }
+
+        var allowedSizeEntities = await _sizeRepository.GetAllSizesByBrandIdAsync(id);
+
+        var allowedSizeDtos = _mapper.Map<List<AllowedSizeDto>>(allowedSizeEntities);
+        return new ServiceResult<IEnumerable<AllowedSizeDto>>
+        {
+            IsSuccess = true,
+            Data = allowedSizeDtos,
+            Failures = new List<IFailureInformation>()
+        };
+    }
+
+    public async Task<IServiceResult> CreateSizeAsync(int id, CreateSizeRequest createSizeRequest)
+    {
+        var brandEntity = await _brandRepository.GetByIdWithSizesAsync(id);
+        if (brandEntity is null)
+        {
+            return new ServiceResult
+            {
+                IsSuccess = false,
+                Failures = new List<IFailureInformation>
+                {
+                    new FailureInformation {Description = "Бренд не найден"}
+                }
+            };
+        }
+
+        var sameSizeInBrand = await _sizeRepository.GetBySizeRfInBrand(createSizeRequest.Rf, id);
+        if (sameSizeInBrand is not null)
+        {
+            return new ServiceResult
+            {
+                IsSuccess = false,
+                Failures = new List<IFailureInformation>
+                {
+                    new FailureInformation{Description = "В списке размеров бренда не может быть элементов с одинаковым размером РФ"}
+                }
+            };
+        }
+
+        var sizeEntity = _mapper.Map<AllowedSize>(createSizeRequest);
+        sizeEntity.BrandId = id;
+        await _sizeRepository.AddAsync(sizeEntity);
+
+        return new ServiceResult
+        { IsSuccess = true, Failures = new List<IFailureInformation>() };
+    }
+
+    public async Task<IServiceResult> UpdateSizeAsync(int brandId, int sizeId, UpdateSizeRequest updateSizeRequest)
+    {
+        var brandEntity = await _brandRepository.GetByIdWithSizesAsync(brandId);
+        if (brandEntity is null)
+        {
+            return new ServiceResult<IEnumerable<AllowedSizeDto>>
+            {
+                IsSuccess = false,
+                Failures = new List<IFailureInformation>
+                {
+                    new FailureInformation {Description = "Бренд не найден"}
+                }
+            };
+        }
+
+        var entity = await _sizeRepository.GetByIdAsync(sizeId);
+        if (entity is null)
+        {
+            return new ServiceResult
+            {
+                IsSuccess = false,
+                Failures = new List<IFailureInformation>
+                    {
+                        new FailureInformation {Description = "Размер не найден"}
+                    }
+            };
+        }
+
+        _mapper.Map(updateSizeRequest, entity);
+        await _sizeRepository.UpdateAsync(entity);
+
+        return new ServiceResult { IsSuccess = true, Failures = new List<IFailureInformation>() };
+    }
+
+    public async Task<IServiceResult> UpdateSizesInBrandAsync(int brandId, UpdateSizesInBrandRequest updateSizesInBrandRequest)
+    {
+        var brandEntity = await _brandRepository.GetByIdWithSizesAsync(brandId);
+        if (brandEntity is null)
+        {
+            return new ServiceResult
+            {
+                IsSuccess = false,
+                Failures = new List<IFailureInformation>
+                {
+                    new FailureInformation {Description = "Бренд не найден"}
+                }
+            };
+        }
+
+        var sizeEntities = new List<AllowedSize>();
+        foreach (var sizeId in updateSizesInBrandRequest.AllowedSizesIds)
+        {
+            var entity = await _sizeRepository.GetByIdAsync(sizeId);
+            if (entity is null)
+            {
+                return new ServiceResult
+                {
+                    IsSuccess = false,
+                    Failures = new List<IFailureInformation>
+                    {
+                        new FailureInformation {Description = $"Размер id={sizeId} не найден"}
+                    }
+                };
+            }
+
+            sizeEntities.Add(entity);
+        }
+
+        brandEntity.AllowedSizes = sizeEntities;
+        await _brandRepository.UpdateAsync(brandEntity);
+
+        return new ServiceResult { IsSuccess = true, Failures = new List<IFailureInformation>() };
+    }
+
+    public async Task<IServiceResult> SoftDeleteSizeAsync(int brandId, int id)
+    {
+        var entity = await _sizeRepository.GetByIdAsync(id);
+        if (entity is null)
+        {
+            return new ServiceResult
+            {
+                IsSuccess = false,
+                Failures = new List<IFailureInformation>
+                    {
+                        new FailureInformation {Description = "Размер не найден"}
+                    }
+            };
+        }
+
+        await _sizeRepository.SoftDeleteAsync(id);
+
+        return new ServiceResult { IsSuccess = true, Failures = new List<IFailureInformation>() };
     }
 }

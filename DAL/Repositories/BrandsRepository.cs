@@ -15,7 +15,9 @@ public class BrandsRepository : DbNamedRepository<Brand>, IBrandsRepository
     public async Task<IEnumerable<Brand>> GetAllWithSizesAsync(CancellationToken cancel = default)
     {
         var result = await Items
-            .Include(x => x.AllowedSizes)
+            .Include(x => x.AllowedSizes
+                .Where(d => !d.IsDeleted))
+            .Where(x => !x.IsDeleted)
             .ToArrayAsync(cancel);
 
         return result;
@@ -25,7 +27,7 @@ public class BrandsRepository : DbNamedRepository<Brand>, IBrandsRepository
     {
         var result = await Set
             .Include(x => x.AllowedSizes)
-            .FirstOrDefaultAsync(x => x.Id == id, cancel);
+            .FirstOrDefaultAsync(x => x.Id == id && !x.IsDeleted, cancel);
 
         return result;
     }

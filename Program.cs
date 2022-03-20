@@ -30,8 +30,7 @@ services.AddScoped(typeof(IRepository<>), typeof(DbRepository<>));
 
 services.AddScoped<IBrandsService, BrandService>();
 services.AddScoped<IBrandsRepository, BrandsRepository>();
-
-services.AddScoped<IAllowedSizesService, AllowedSizesService>();
+services.AddScoped<IAllowedSizesRepository, AllowedSizesRepository>();
 
 var app = builder.Build();
 

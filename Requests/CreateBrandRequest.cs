@@ -8,9 +8,4 @@ public class CreateBrandRequest
     /// Название
     /// </summary>
     public string Name { get; set; } = null!;
-
-    /// <summary>
-    /// Список допустимых размеров одежды
-    /// </summary>
-    public IEnumerable<AllowedSizeDto> AllowedSizes { get; set; } = null!;
 }

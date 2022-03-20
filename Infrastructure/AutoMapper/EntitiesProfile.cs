@@ -12,7 +12,9 @@ public class EntitiesProfile : Profile
         CreateMap<Brand, BrandDto>();
         CreateMap<CreateBrandRequest, Brand>();
         CreateMap<UpdateBrandRequest, Brand>();
-        CreateMap<AllowedSizeDto, AllowedSize>();
-        CreateMap<AllowedSize, AllowedSizeDto>();
+        
+        CreateMap<AllowedSize, AllowedSizeDto>().ReverseMap();
+        CreateMap<CreateSizeRequest, AllowedSize>();
+        CreateMap<UpdateSizeRequest, AllowedSize>();
     }
 }

@@ -4,7 +4,7 @@
 
 namespace BrandsService.Migrations
 {
-    public partial class Init : Migration
+    public partial class New : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -14,7 +14,8 @@ namespace BrandsService.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(200)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -22,35 +23,36 @@ namespace BrandsService.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Sizes",
+                name: "AllowedSizes",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    RF = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Rf = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Own = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    BrandId = table.Column<int>(type: "int", nullable: true)
+                    BrandId = table.Column<int>(type: "int", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Sizes", x => x.Id);
+                    table.PrimaryKey("PK_AllowedSizes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Sizes_Brands_BrandId",
+                        name: "FK_AllowedSizes_Brands_BrandId",
                         column: x => x.BrandId,
                         principalTable: "Brands",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Sizes_BrandId",
-                table: "Sizes",
+                name: "IX_AllowedSizes_BrandId",
+                table: "AllowedSizes",
                 column: "BrandId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Sizes");
+                name: "AllowedSizes");
 
             migrationBuilder.DropTable(
                 name: "Brands");

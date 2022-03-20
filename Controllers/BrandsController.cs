@@ -25,11 +25,11 @@ public class BrandsController : ControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpGet("")]
-    public async Task<IActionResult> GetAllAsync()
+    public async Task<IActionResult> GetAllBrandsAsync()
     {
         try
         {
-            var serviceResult = await _brandsService.GetAllAsync();
+            var serviceResult = await _brandsService.GetAllBrandsAsync();
             if (serviceResult.IsSuccess)
                 return Ok(serviceResult);
 
@@ -47,11 +47,11 @@ public class BrandsController : ControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpPost("")]
-    public async Task<IActionResult> CreateAsync(CreateBrandRequest createBrandRequest)
+    public async Task<IActionResult> CreateBrandAsync(CreateBrandRequest createBrandRequest)
     {
         try
         {
-            var serviceResult = await _brandsService.CreateAsync(createBrandRequest);
+            var serviceResult = await _brandsService.CreateBrandAsync(createBrandRequest);
             if (serviceResult.IsSuccess)
                 return Ok(serviceResult);
 
@@ -70,11 +70,11 @@ public class BrandsController : ControllerBase
     /// <param name="updateBrandRequest"></param>
     /// <returns></returns>
     [HttpPut("")]
-    public async Task<IActionResult> UpdateAsync(UpdateBrandRequest updateBrandRequest)
+    public async Task<IActionResult> UpdateBrandAsync(UpdateBrandRequest updateBrandRequest)
     {
         try
         {
-            var serviceResult = await _brandsService.UpdateAsync(updateBrandRequest);
+            var serviceResult = await _brandsService.UpdateBrandAsync(updateBrandRequest);
             if (serviceResult.IsSuccess)
                 return Ok(serviceResult);
 
@@ -93,11 +93,11 @@ public class BrandsController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpDelete("{id}")]
-    public async Task<IActionResult> SoftDeleteAsync(int id)
+    public async Task<IActionResult> SoftDeleteBrandAsync(int id)
     {
         try
         {
-            var serviceResult = await _brandsService.SoftDeleteAsync(id);
+            var serviceResult = await _brandsService.SoftDeleteBrandAsync(id);
             if (serviceResult.IsSuccess)
                 return Ok(serviceResult);
 
@@ -110,6 +110,125 @@ public class BrandsController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// Получить все размеры по бренду
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    [HttpGet("{id}/allowed-sizes")]
+    public async Task<IActionResult> GetAllSizesAsync(int id)
+    {
+        try
+        {
+            var serviceResult = await _brandsService.GetAllSizesByBrandIdAsync(id);
+            if (serviceResult.IsSuccess)
+                return Ok(serviceResult);
+
+            return BadRequest(serviceResult);
+        }
+        catch (Exception e)
+        {
+            LogError(e);
+            return StatusCode(500);
+        }
+    }
+
+    /// <summary>
+    /// Создать размер в бренде
+    /// </summary>
+    /// <param name="brandId"></param>
+    /// <param name="createSizeRequest"></param>
+    /// <returns></returns>
+    [HttpPost("{brandId}/allowed-sizes")]
+    public async Task<IActionResult> CreateSizeAsync([FromQuery]int brandId, CreateSizeRequest createSizeRequest)
+    {
+        try
+        {
+            var serviceResult = await _brandsService.CreateSizeAsync(brandId, createSizeRequest);
+            if (serviceResult.IsSuccess)
+                return Ok(serviceResult);
+
+            return BadRequest(serviceResult);
+        }
+        catch (Exception e)
+        {
+            LogError(e);
+            return StatusCode(500);
+        }
+    }
+
+    /// <summary>
+    /// Обновить размер в бренде
+    /// </summary>
+    /// <param name="brandId"></param>
+    /// <param name="sizeId"></param>
+    /// <param name="updateSizeRequest"></param>
+    /// <returns></returns>
+    [HttpPut("{brandId}/allowed-sizes/{sizeId}")]
+    public async Task<IActionResult> UpdateSizeAsync([FromQuery] int brandId, int sizeId, UpdateSizeRequest updateSizeRequest)
+    {
+        try
+        {
+            var serviceResult = await _brandsService.UpdateSizeAsync(brandId, sizeId, updateSizeRequest);
+            if (serviceResult.IsSuccess)
+                return Ok(serviceResult);
+
+            return BadRequest(serviceResult);
+        }
+        catch (Exception e)
+        {
+            LogError(e);
+            return StatusCode(500);
+        }
+    }
+
+    /// <summary>
+    /// Обновить список размеров в бренде
+    /// </summary>
+    /// <param name="brandId"></param>
+    /// <param name="updateSizesInBrandRequest"></param>
+    /// <returns></returns>
+    [HttpPut("{brandId}/allowed-sizes")]
+    public async Task<IActionResult> UpdateSizesInBrandAsync([FromQuery] int brandId, UpdateSizesInBrandRequest updateSizesInBrandRequest)
+    {
+        try
+        {
+            var serviceResult = await _brandsService.UpdateSizesInBrandAsync(brandId, updateSizesInBrandRequest);
+            if (serviceResult.IsSuccess)
+                return Ok(serviceResult);
+
+            return BadRequest(serviceResult);
+        }
+        catch (Exception e)
+        {
+            LogError(e);
+            return StatusCode(500);
+        }
+    }
+
+    /// <summary>
+    /// Soft delete
+    /// </summary>
+    /// <param name="brandId"></param>
+    /// <param name="sizeId"></param>
+    /// <returns></returns>
+    [HttpDelete("{brandId}/allowed-sizes/{sizeId}")]
+    public async Task<IActionResult> SoftDeleteSizeAsync(int brandId, int sizeId)
+    {
+        try
+        {
+            var serviceResult = await _brandsService.SoftDeleteSizeAsync(brandId, sizeId);
+            if (serviceResult.IsSuccess)
+                return Ok(serviceResult);
+
+            return BadRequest(serviceResult);
+        }
+        catch (Exception e)
+        {
+            LogError(e);
+            return StatusCode(500);
+        }
+    }
 
     private void LogError(Exception e, [CallerMemberName] string methodName = null!)
     {
