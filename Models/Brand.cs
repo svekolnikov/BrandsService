@@ -1,9 +1,14 @@
-﻿namespace BrandsService.Models
+﻿using BrandsService.Models.Base;
+
+namespace BrandsService.Models;
+
+/// <summary>
+/// Бренд (компания)
+/// </summary>
+public class Brand : NamedEntity
 {
-    public class Brand
-    {
-        public long Id { get; set; }
-        public string Name { get; set; }
-        public IEnumerable<Size> AllowedSizes { get; set; }
-    }
+    /// <summary>
+    /// Список допустимых размеров одежды
+    /// </summary>
+    public IEnumerable<AllowedSize> AllowedSizes { get; set; } = null!;
 }
