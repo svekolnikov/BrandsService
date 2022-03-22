@@ -35,7 +35,32 @@ public class BrandService : IBrandsService
             Data = brandsDto
         };
     }
-    
+
+    public async Task<IServiceResult<BrandDto>> GetBrandByIdAsync(int id)
+    {
+        var brandEntity = await _brandRepository.GetByIdWithSizesAsync(id);
+        if (brandEntity is null)
+        {
+            return new ServiceResult<BrandDto>
+            {
+                IsSuccess = false,
+                Failures = new List<IFailureInformation>
+                {
+                    new FailureInformation {Description = "Бренд не найден"}
+                }
+            };
+        }
+
+        var brandDto = _mapper.Map<BrandDto>(brandEntity);
+
+        return new ServiceResult<BrandDto>
+        {
+            IsSuccess = true, 
+            Data = brandDto,
+            Failures = new List<IFailureInformation>()
+        };
+    }
+
     public async Task<IServiceResult> CreateBrandAsync(CreateBrandRequest createBrandRequest)
     {
         if (await _brandRepository.GetByNameAsync(createBrandRequest.Name) is not null)
@@ -91,7 +116,7 @@ public class BrandService : IBrandsService
 
         await _brandRepository.UpdateAsync(brandEntity);
 
-        return new ServiceResult {Failures = new List<IFailureInformation>()};
+        return new ServiceResult {IsSuccess = true, Failures = new List<IFailureInformation>()};
     }
     
     public async Task<IServiceResult> SoftDeleteBrandAsync(int id)
@@ -225,6 +250,8 @@ public class BrandService : IBrandsService
                 }
             };
         }
+
+        updateSizesInBrandRequest.AllowedSizesIds = updateSizesInBrandRequest.AllowedSizesIds.Distinct();
 
         var sizeEntities = new List<AllowedSize>();
         foreach (var sizeId in updateSizesInBrandRequest.AllowedSizesIds)

@@ -10,6 +10,13 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:BrandsService.Controllers.BrandsController.GetBrandByIdAsync(System.Int32)">
+            <summary>
+            Получить бренд по Id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
         <member name="M:BrandsService.Controllers.BrandsController.CreateBrandAsync(BrandsService.Requests.CreateBrandRequest)">
             <summary>
             Создать бренд
@@ -90,22 +97,6 @@
             Список допустимых размеров одежды
             </summary>
         </member>
-        <member name="T:BrandsService.IServiceResult">
-            <summary>
-            Результат выполнения сервиса без данных
-            </summary>
-        </member>
-        <member name="T:BrandsService.IServiceResult`1">
-            <summary>
-            Результат выполнения сервиса с данными
-            </summary>
-            <typeparam name="T"></typeparam>
-        </member>
-        <member name="P:BrandsService.IServiceResult`1.Data">
-            <summary>
-            Возвращаемые данные из сервиса
-            </summary>
-        </member>
         <member name="T:BrandsService.Models.AllowedSize">
             <summary>
             Размер, устанавливает связь размера бренда и размера РФ
@@ -160,6 +151,13 @@
             <summary>
             Получить все бренды
             </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BrandsService.Services.Interfaces.IBrandsService.GetBrandByIdAsync(System.Int32)">
+            <summary>
+            Получить бренд по Id
+            </summary>
+            <param name="id"></param>
             <returns></returns>
         </member>
         <member name="M:BrandsService.Services.Interfaces.IBrandsService.CreateBrandAsync(BrandsService.Requests.CreateBrandRequest)">
@@ -226,6 +224,22 @@
         <member name="P:BrandsService.Services.Interfaces.IFailureInformation.Description">
             <summary>
             Описание ошибки
+            </summary>
+        </member>
+        <member name="T:BrandsService.Services.Interfaces.IServiceResult">
+            <summary>
+            Результат выполнения сервиса без данных
+            </summary>
+        </member>
+        <member name="T:BrandsService.Services.Interfaces.IServiceResult`1">
+            <summary>
+            Результат выполнения сервиса с данными
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="P:BrandsService.Services.Interfaces.IServiceResult`1.Data">
+            <summary>
+            Возвращаемые данные из сервиса
             </summary>
         </member>
     </members>

@@ -1,15 +1,12 @@
-﻿using BrandsService.Services;
-using BrandsService.Services.Interfaces;
-
-namespace BrandsService;
+﻿namespace BrandsService.Services.Interfaces;
 
 /// <summary>
 /// Результат выполнения сервиса без данных
 /// </summary>
 public interface IServiceResult
 {
-    public bool IsSuccess { get; set; }
-    public IReadOnlyCollection<IFailureInformation>? Failures { get; }
+    bool IsSuccess { get; set; }
+    IReadOnlyCollection<IFailureInformation>? Failures { get; }
 }
 
 /// <summary>

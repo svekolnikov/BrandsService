@@ -12,25 +12,32 @@ public interface IBrandsService
     /// Получить все бренды
     /// </summary>
     /// <returns></returns>
-    public Task<IServiceResult<IEnumerable<BrandDto>>> GetAllBrandsAsync();
+    Task<IServiceResult<IEnumerable<BrandDto>>> GetAllBrandsAsync();
+
+    /// <summary>
+    /// Получить бренд по Id
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    Task<IServiceResult<BrandDto>> GetBrandByIdAsync(int id);
 
     /// <summary>
     /// Создать бренд
     /// </summary>
     /// <param name="createBrandRequest"></param>
-    public Task<IServiceResult> CreateBrandAsync(CreateBrandRequest createBrandRequest);
+    Task<IServiceResult> CreateBrandAsync(CreateBrandRequest createBrandRequest);
 
     /// <summary>
     /// Обновить бренд
     /// </summary>
     /// <returns></returns>
-    public Task<IServiceResult> UpdateBrandAsync(UpdateBrandRequest updateBrandRequest);
+    Task<IServiceResult> UpdateBrandAsync(UpdateBrandRequest updateBrandRequest);
 
     /// <summary>
     /// Soft delete
     /// </summary>
     /// <returns></returns>
-    public Task<IServiceResult> SoftDeleteBrandAsync(int id);
+    Task<IServiceResult> SoftDeleteBrandAsync(int id);
 
 
     /// <summary>
@@ -38,7 +45,7 @@ public interface IBrandsService
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public Task<IServiceResult<IEnumerable<AllowedSizeDto>>> GetAllSizesByBrandIdAsync(int id);
+    Task<IServiceResult<IEnumerable<AllowedSizeDto>>> GetAllSizesByBrandIdAsync(int id);
 
     /// <summary>
     /// Создать размер
@@ -46,7 +53,7 @@ public interface IBrandsService
     /// <param name="id"></param>
     /// <param name="createSizeRequest"></param>
     /// <returns></returns>
-    public Task<IServiceResult> CreateSizeAsync(int id, CreateSizeRequest createSizeRequest);
+    Task<IServiceResult> CreateSizeAsync(int id, CreateSizeRequest createSizeRequest);
 
     /// <summary>
     /// Обновить размер в бренде
@@ -55,7 +62,7 @@ public interface IBrandsService
     /// <param name="sizeId"></param>
     /// <param name="updateSizeRequest"></param>
     /// <returns></returns>
-    public Task<IServiceResult> UpdateSizeAsync(int brandId, int sizeId, UpdateSizeRequest updateSizeRequest);
+    Task<IServiceResult> UpdateSizeAsync(int brandId, int sizeId, UpdateSizeRequest updateSizeRequest);
 
     /// <summary>
     /// Обновить список размеров в бренде
@@ -63,11 +70,11 @@ public interface IBrandsService
     /// <param name="brandId"></param>
     /// <param name="updateSizesInBrandRequest"></param>
     /// <returns></returns>
-    public Task<IServiceResult> UpdateSizesInBrandAsync(int brandId, UpdateSizesInBrandRequest updateSizesInBrandRequest);
+    Task<IServiceResult> UpdateSizesInBrandAsync(int brandId, UpdateSizesInBrandRequest updateSizesInBrandRequest);
 
     /// <summary>
     /// Soft delete
     /// </summary>
     /// <returns></returns>
-    public Task<IServiceResult> SoftDeleteSizeAsync(int brandId, int id);
+    Task<IServiceResult> SoftDeleteSizeAsync(int brandId, int id);
 }

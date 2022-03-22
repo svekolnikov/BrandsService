@@ -8,5 +8,5 @@ public interface IFailureInformation
     /// <summary>
     /// Описание ошибки
     /// </summary>
-    public string Description { get; }
+    string Description { get; }
 }

@@ -43,6 +43,29 @@ public class BrandsController : ControllerBase
     }
 
     /// <summary>
+    /// Получить бренд по Id
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetBrandByIdAsync(int id)
+    {
+        try
+        {
+            var serviceResult = await _brandsService.GetBrandByIdAsync(id);
+            if (serviceResult.IsSuccess)
+                return Ok(serviceResult);
+
+            return BadRequest(serviceResult);
+        }
+        catch (Exception e)
+        {
+            LogError(e);
+            return StatusCode(500);
+        }
+    }
+
+    /// <summary>
     /// Создать бренд
     /// </summary>
     /// <returns></returns>
